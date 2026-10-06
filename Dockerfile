@@ -10,6 +10,12 @@ WORKDIR /rails
 # CONA builds run as a single user: apt must not switch to its _apt user
 RUN echo 'APT::Sandbox::User "root";' > /etc/apt/apt.conf.d/00-cona-single-user
 
+# CONA builds run as a single user: changing a file's owner to another user is not possible there,
+# so package scripts' chown/chgrp must not fail the build
+RUN printf '#!/bin/sh\n/usr/bin/chown "$@" 2>/dev/null || true\n' > /usr/local/bin/chown && \
+    printf '#!/bin/sh\n/usr/bin/chgrp "$@" 2>/dev/null || true\n' > /usr/local/bin/chgrp && \
+    chmod +x /usr/local/bin/chown /usr/local/bin/chgrp
+
 # Install base packages
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libvips postgresql-client libyaml-0-2
