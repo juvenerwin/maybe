@@ -29,6 +29,24 @@ To get setup for local development, you have two options:
    - [Linux Setup Guide](https://github.com/maybe-finance/maybe/wiki/Linux-Dev-Setup-Guide)
    - [Windows Setup Guide](https://github.com/maybe-finance/maybe/wiki/Windows-Dev-Setup-Guide)
 
+### Running the Test Suite
+
+Run the full test suite locally with:
+
+```bash
+bin/rails test
+```
+
+Useful variations:
+
+```bash
+bin/rails test test/models/account_test.rb      # a single file
+bin/rails test test/models/account_test.rb:42   # a single test by line number
+bin/rails test:system                           # system tests (slower, run when applicable)
+```
+
+Make sure the suite passes before opening a pull request.
+
 ### Making a Pull Request
 
 1. Fork the repo
