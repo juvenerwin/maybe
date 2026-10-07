@@ -5,3 +5,13 @@ import "controllers";
 Turbo.StreamActions.redirect = function () {
   Turbo.visit(this.target);
 };
+
+// Log a welcome message the first time a user lands in the app
+try {
+  if (!localStorage.getItem("cona_welcomed")) {
+    console.log("Welcome to Cona");
+    localStorage.setItem("cona_welcomed", "true");
+  }
+} catch (e) {
+  // localStorage may be unavailable (e.g. private mode); skip silently
+}
